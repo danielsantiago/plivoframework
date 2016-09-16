@@ -10,12 +10,16 @@ RUN pip install flask ujson redis && pip install -Iv https://github.com/gevent/g
 #  Copy plivo sources
 COPY src/ /opt/plivo/src/
 
-# Config file
+# Config files
 COPY src/config/default.conf /etc/plivo/default.conf
+COPY src/config/cache.conf /etc/plivo/cache.conf
 
 COPY scripts/entrypoint.sh /entrypoint.sh
 
 # Plivo Outbound server. (Freeswitch -> Plivo)
 EXPOSE 8084
+
+# Plivo Cache server. (Plivo -> Cache)
+EXPOSE 8089
 
 ENTRYPOINT ["/entrypoint.sh"]

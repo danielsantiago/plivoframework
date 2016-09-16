@@ -41,6 +41,10 @@ function replace_default_vars(){
         replace_var "DEFAULT_HANGUP_URL" $DEFAULT_HANGUP_URL /etc/plivo/default.conf
     fi
 
+    if [ "$CACHE_URL" ]; then
+        replace_var "CACHE_URL" $CACHE_URL /etc/plivo/default.conf
+    fi
+
     if [ "$EXTRA_FS_VARS" ]; then
         replace_var "EXTRA_FS_VARS" $EXTRA_FS_VARS /etc/plivo/default.conf
     fi
@@ -52,11 +56,15 @@ function replace_default_vars(){
 
 function replace_cache_vars(){
     if [ "$REDIS_HOST" ]; then
-        replace_var "REDIS_HOST" $REDIS_HOST /usr/local/plivo/etc/plivo/cache/cache.conf
+        replace_var "REDIS_HOST" $REDIS_HOST /etc/plivo/cache.conf
     fi
 
     if [ "$REDIS_PORT" ]; then
-        replace_var "REDIS_PORT" $REDIS_PORT /usr/local/plivo/etc/plivo/cache/cache.conf
+        replace_var "REDIS_PORT" $REDIS_PORT /etc/plivo/cache.conf
+    fi
+
+    if [ "$LOG_LEVEL" ]; then
+        replace_var "LOG_LEVEL" $LOG_LEVEL /etc/plivo/cache.conf
     fi
 }
 
@@ -74,7 +82,7 @@ case $1 in
 
     "cache")
         replace_cache_vars
-        echo "Not configured yet"
+        exec "/opt/plivo/src/plivo-cache" "-c" "/etc/plivo/cache.conf"
         ;;
 
     *)
