@@ -934,9 +934,15 @@ class Dial(Element):
                 elif event['Event-Name'] == 'CHANNEL_BRIDGE':
                     outbound_socket.log.info("Dial bridged")
                 elif event['Event-Name'] == 'CHANNEL_UNBRIDGE':
-                    outbound_socket.log.info("Dial unbridged")
-                    break
-                elif event['Event-Name'] == 'CHANNEL_EXECUTE_COMPLETE':
+                    if 'variable_transfer_source' in event:
+                        outbound_socket.log.info("Dial unbridged as part of transfer. "
+                                                 "Continuing")
+                        continue
+                    else:
+                        outbound_socket.log.info("Dial unbridged")
+                        break
+                elif event['Event-Name'] == 'CHANNEL_EXECUTE_COMPLETE' \
+                        and event['variable_current_application'] == 'bridge':
                     outbound_socket.log.info("Dial completed %s" % str(event))
                     break
 

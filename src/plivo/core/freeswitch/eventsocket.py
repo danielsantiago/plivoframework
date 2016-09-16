@@ -301,6 +301,8 @@ class EventSocket(Commands):
         except KeyError:
             callback = self._event_callbacks['unbound_event']
         if not callback:
+            self.trace("UNBOUND EVENT: {0}".format(event['Event-Name']))
+            self.trace("EVENT: {0}".format(event))
             return
         # Calls callback.
         try:

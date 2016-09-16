@@ -36,6 +36,9 @@ class Event(object):
     def __setitem__(self, key, value):
         self.set_header(key, value)
 
+    def __contains__(self, key):
+        return key in self._headers
+
     def get_content_length(self):
         '''
         Gets Content-Length header as integer.
