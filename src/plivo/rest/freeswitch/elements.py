@@ -934,9 +934,10 @@ class Dial(Element):
                 elif event['Event-Name'] == 'CHANNEL_BRIDGE':
                     outbound_socket.log.info("Dial bridged")
                 elif event['Event-Name'] == 'CHANNEL_UNBRIDGE':
-                    if 'variable_transfer_source' in event:
+                    # La llamada original
+                    if 'variable_sip_refer_to' in event:
                         outbound_socket.log.info("Dial unbridged as part of transfer. "
-                                                 "Continuing")
+                                                 "Keeping greenlet going")
                         continue
                     else:
                         outbound_socket.log.info("Dial unbridged")
