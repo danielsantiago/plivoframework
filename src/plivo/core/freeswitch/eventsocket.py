@@ -296,13 +296,13 @@ class EventSocket(Commands):
         E.g. Receives Background_Job event and calls on_background_job function.
         '''
         # When no callbacks found, try unbound_event.
+        self.trace("EVENT NAME: {0}".format(event['Event-Name']))
+        self.trace("EVENT: {0}".format(event))
         try:
             callback = self._event_callbacks[event['Event-Name']]
         except KeyError:
             callback = self._event_callbacks['unbound_event']
         if not callback:
-            self.trace("UNBOUND EVENT: {0}".format(event['Event-Name']))
-            self.trace("EVENT: {0}".format(event))
             return
         # Calls callback.
         try:

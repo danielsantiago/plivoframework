@@ -935,7 +935,7 @@ class Dial(Element):
                     outbound_socket.log.info("Dial bridged")
                 elif event['Event-Name'] == 'CHANNEL_UNBRIDGE':
                     # La llamada original
-                    if 'variable_sip_refer_to' in event:
+                    if 'variable_last_bridge_proto_specific_hangup_cause' not in event:
                         outbound_socket.log.info("Dial unbridged as part of transfer. "
                                                  "Keeping greenlet going")
                         continue
