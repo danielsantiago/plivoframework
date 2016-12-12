@@ -52,6 +52,10 @@ function replace_default_vars(){
     if [ "$LOG_LEVEL" ]; then
         replace_var "LOG_LEVEL" $LOG_LEVEL /etc/plivo/default.conf
     fi
+
+    if [ "$TRACE" ]; then
+        replace_var "TRACE" $TRACE /etc/plivo/default.conf
+    fi
 }
 
 function replace_cache_vars(){
