@@ -376,7 +376,7 @@ class RESTInboundSocket(InboundEventSocket):
             if hangup_cause == 'LOSE_RACE':
                 return
             bleg_uuid = event['Unique-ID']
-            
+
             params = {'DialBLegUUID': bleg_uuid,
                       'DialALegUUID': aleg_uuid,
                       'DialBLegStatus': 'hangup',
@@ -718,7 +718,7 @@ class RESTInboundSocket(InboundEventSocket):
             dial_calls.append(dial_call_str)
 
         # Build global dial string
-        dial_str = ":_:".join(dial_calls)
+        dial_str = ",".join(dial_calls)
         global_options = ",".join(group_options)
         if global_options:
             if len(dial_calls) > 1:

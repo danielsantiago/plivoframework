@@ -161,7 +161,7 @@ class Element(object):
         return self._element
 
     def parse_element(self, element, uri=None):
-        self.uri = uri 
+        self.uri = uri
         self._element = element
         self.prepare_attributes(element)
         self.prepare_text(element)
@@ -260,7 +260,7 @@ class Conference(Element):
     callbackMethod: submit to 'callbackUrl' url using GET or POST
     digitsMatch: a list of matching digits to send with callbackUrl
             Can be a list of digits patterns separated by comma.
-    floorEvent: 'true' or 'false'. When this member holds the floor, 
+    floorEvent: 'true' or 'false'. When this member holds the floor,
             send notification to callbackUrl. (default 'false')
     """
     DEFAULT_TIMELIMIT = 0
@@ -834,7 +834,7 @@ class Dial(Element):
             outbound_socket.log.error("Dial Aborted, No Number to dial !")
             return
         # Create dialstring
-        self.dial_str = ':_:'.join(numbers)
+        self.dial_str = ','.join(numbers)
 
         # Set time limit: when reached, B Leg is hung up
         sched_hangup_id = str(uuid.uuid1())
@@ -863,7 +863,7 @@ class Dial(Element):
         self.dial_str = '<%s,%s%s>%s' % (ring_flag, dial_time_limit, dial_confirm, self.dial_str)
         # Ugly hack to force use of enterprise originate because simple originate lacks speak support in ringback
         if len(numbers) < 2:
-            self.dial_str += ':_:'
+            self.dial_str += ','
 
         # Set hangup on '*' or unset if not provided
         if self.hangup_on_star:
@@ -1368,7 +1368,7 @@ class PreAnswer(Element):
     def prepare(self, outbound_socket):
         for child_instance in self.children:
             if hasattr(child_instance, "prepare"):
-                outbound_socket.validate_element(child_instance.get_element(), 
+                outbound_socket.validate_element(child_instance.get_element(),
                                                  child_instance)
                 child_instance.prepare(outbound_socket)
 
@@ -1553,7 +1553,7 @@ class SIPTransfer(Element):
                 outbound_socket.deflect(self.sip_url)
             else:
                 outbound_socket.log.debug("SIPTransfer using redirect")
-                outbound_socket.redirect(self.sip_url) 
+                outbound_socket.redirect(self.sip_url)
             raise RESTSIPTransferException(self.sip_url)
         raise RESTFormatException("SIPTransfer must have a sip uri")
 
@@ -1964,7 +1964,7 @@ class GetSpeech(Element):
                 timer.cancel()
                 if gpath:
                     try:
-                        os.remove(gpath) 
+                        os.remove(gpath)
                     except:
                         pass
 
