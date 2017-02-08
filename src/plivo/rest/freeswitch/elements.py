@@ -881,20 +881,24 @@ class Dial(Element):
                 play_str = "file_string://silence_stream://1!%s" % play_str
                 outbound_socket.set("bridge_early_media=false")
                 outbound_socket.set("instant_ringback=true")
+                outbound_socket.set("ignore_early_media=true")
                 outbound_socket.set("ringback=%s" % play_str)
             else:
                 self.dial_music = ''
         if not self.dial_music:
             outbound_socket.set("bridge_early_media=false")
             outbound_socket.set("instant_ringback=true")
+            outbound_socket.set("ignore_early_media=true")
             outbound_socket.set("ringback=${us-ring}")
         elif self.dial_music == "none":
             outbound_socket.set("bridge_early_media=false")
             outbound_socket.unset("instant_ringback")
+            outbound_socket.set("ignore_early_media=true")
             outbound_socket.unset("ringback")
         elif self.dial_music == "real":
             outbound_socket.set("bridge_early_media=true")
             outbound_socket.set("instant_ringback=false")
+            outbound_socket.set("ignore_early_media=true")
             outbound_socket.unset("ringback")
 
         # Start dial
