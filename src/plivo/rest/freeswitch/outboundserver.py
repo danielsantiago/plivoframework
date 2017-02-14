@@ -156,7 +156,6 @@ class PlivoOutboundServer(outboundsocket.OutboundServer):
                 self.log = DummyLogger()
             else:
                 self.log = StdoutLogger()
-            self.log.set_debug()
         else:
             logtype = config.get('outbound_server', 'LOG_TYPE')
             if logtype == 'file':
@@ -175,15 +174,15 @@ class PlivoOutboundServer(outboundsocket.OutboundServer):
                 self.log = HTTPLogger(url=url, method=method, fallback_file=fallback_file)
             else:
                 self.log = StdoutLogger()
-            log_level = config.get('outbound_server', 'LOG_LEVEL', default='INFO')
-            if log_level == 'DEBUG' or self._trace is True:
-                self.log.set_debug()
-            elif log_level == 'INFO':
-                self.log.set_info()
-            elif log_level == 'ERROR':
-                self.log.set_error()
-            elif log_level in ('WARN', 'WARNING'):
-                self.log.set_warn()
+        log_level = config.get('outbound_server', 'LOG_LEVEL', default='DEBUG')
+        if log_level == 'DEBUG' or self._trace is True:
+            self.log.set_debug()
+        elif log_level == 'INFO':
+            self.log.set_info()
+        elif log_level == 'ERROR':
+            self.log.set_error()
+        elif log_level in ('WARN', 'WARNING'):
+            self.log.set_warn()
 
     def do_daemon(self):
         """This will daemonize the current application
